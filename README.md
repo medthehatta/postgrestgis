@@ -31,6 +31,12 @@ If you want to populate some "starter" functions:
 docker exec -it postgrestgis-db-1 su -c "psql -d gis -f /scripts/functions.sql" postgres
 ```
 
+Every time you add new functions, you have to ask PostgREST to refresh its
+schema cache (annoying):
+```bash
+docker kill -s SIGUSR1 postgrestgis-server-1
+```
+
 Example PostgREST call (need the "starter" functions from above):
 
 ```bash
