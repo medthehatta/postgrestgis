@@ -19,7 +19,7 @@ Perform the initial setup (can't do this during container build because the DB
 isn't fully operational yet):
 
 ```bash
-docker exec -it postgrestgis-db-1 su -c "psql -d gis -f /scripts/setup.sql" postgres
+docker-compose exec -it db su postgres -c "psql -d gis -f /scripts/setup.sql"
 ```
 
 Tips
@@ -28,13 +28,13 @@ Tips
 If you want to populate some "starter" functions:
 
 ```bash
-docker exec -it postgrestgis-db-1 su -c "psql -d gis -f /scripts/functions.sql" postgres
+docker-compose exec -it db su postgres -c "psql -d gis -f /scripts/functions.sql"
 ```
 
 Every time you add new functions, you have to ask PostgREST to refresh its
 schema cache (annoying):
 ```bash
-docker kill -s SIGUSR1 postgrestgis-server-1
+docker-compose kill -s SIGUSR1 server
 ```
 
 Example PostgREST call (need the "starter" functions from above):
@@ -68,7 +68,7 @@ EOF
 If you want to gain psql access:
 
 ```bash
-docker exec -it postgrestgis-db-1 su -c psql postgres
+docker-compose exec -it db su postgres -c psql
 ```
 
 Maintainer
