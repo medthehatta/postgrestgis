@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+    db:
+        build: postgis
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_DBNAME: gis
+            POSTGRES_USER: docker
+            POSTGRES_PASS: docker
+
+    server:
+        image: postgrest/postgrest
+        ports:
+            - "3000:3000"
+        environment:
+            PGRST_DB_URI: "postgres://authenticator:gisops@db/gis"
+            PGRST_DB_SCHEMA: "api"
+            PGRST_DB_ANON_ROLE: "web_anon"
+        depends_on:
+            - db
